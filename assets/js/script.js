@@ -253,3 +253,18 @@ saveTasks();
 console.log(tempArr);
     }
   });
+
+  $("#trash").droppable({
+    accept: ".card .list-group-item",
+    tolerance: "touch",
+    drop: function(event, ui) {
+      ui.draggable.remove();
+      console.log("drop");
+    },
+    over: function(event, ui) {
+      console.log("over");
+    },
+    out: function(event, ui) {
+      console.log("out");
+    }
+  });
