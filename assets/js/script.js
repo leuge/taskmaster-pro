@@ -91,20 +91,6 @@ $(this).replaceWith(textInput);
 
   textInput.trigger("focus");
 
-//(".list-group").on("click", "p", function() {
-   // var text = $(this).text();
-    //console.log(text);
-  //});
-  
-//$(".list-group").on("click", "p", function() {
-    //console.log(this);
-  //});
-
-//$(".list-group").on("click", "p", function() {
-    //console.log("<p> was clicked");
-  //});
-
-
 // modal was triggered
 $("#task-form-modal").on("show.bs.modal", function() {
   // clear values
@@ -118,7 +104,7 @@ $("#task-form-modal").on("shown.bs.modal", function() {
 });
 
 // save button in modal was clicked
-$("#task-form-modal .btn-primary").click(function() {
+$("#task-form-modal .btn-save").click(function() {
   // get form values
   var taskText = $("#modalTaskDescription").val();
   var taskDate = $("#modalDueDate").val();
@@ -211,12 +197,22 @@ $(".list-group").on("blur", "input[type='text']", function() {
     tolerance: "pointer",
     helper: "clone",
     activate: function(event) {
+      $(this)
+      addClass(dropover)
+      $(bottom-trash)
+      addClass(bottom-trash-drag)
       console.log("activate", this);
     },
     deactivate: function(event) {
+      $(this)
+      removeClass(dropover)
+      $(bottom-trash)
+      removeClass(bottom-trash-drag)
       console.log("deactivate", this);
     },
     over: function(event) {
+      $(event.target)
+      addClass(dropover-active)
       console.log("over", event.target);
     },
     out: function(event) {
@@ -261,13 +257,19 @@ console.log(tempArr);
     accept: ".card .list-group-item",
     tolerance: "touch",
     drop: function(event, ui) {
+      $(bottom-trash)
+      removeClass(bottom-trash-active)
       ui.draggable.remove();
       console.log("drop");
     },
     over: function(event, ui) {
+      $(bottom-trash)
+      addClass(bottom-trash-active)
       console.log("over");
     },
     out: function(event, ui) {
+      $(bottom-trash)
+      removeClass(bottom-trash-active)
       console.log("out");
     }
   });
@@ -310,3 +312,9 @@ $(".list-group").on("change", "input[type='text']", function() {
   // Pass task's <li> element into auditTask() to check new due date
   auditTask($(taskSpan).closest(".list-group-item"));
 });
+
+setInterval(function () {
+  $(".card .list-group-item").each(function (el) {
+    auditTask(el);
+  });
+}, 1800000);
